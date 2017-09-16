@@ -1,8 +1,43 @@
-$("#submit-form").on('click',function({
-  
-}));
+//Psuedocode
 
-$("#button").on('click', function({
+//==============================================================================
+
+//Global Variables
+//==============================================================================
+var topicArray = ["Carl Weathers", "Chow Yun-fat", "Chuck Norris", "Jean-Claude Van Damme"
+,"Mel Gibson","Harrison Ford","Jackie Chan", "Sylvester Stallone", "Arnold Schwarzenegger",
+"Bruce Willis", "Kurt Russel"];
+
+var topic = $(this).attr(".topic-btn",".submit-form-btn");
+
+var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+  topic + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+//Functions
+//==============================================================================
+
+$('.topics-list').empty();
+
+function renderButtons(){
+  for (var i = 0; i < topicArray.length; i++){
+    var topicButton = $("<button>");
+    topicButton.addClass("topic-btn");
+    topicButton.attr("data-name", topicArray[i]);
+    topicButton.text(topicArray[i]);
+    $('.topics-list').append(topicButton);
+  }
+}
+
+
+function submitForm(){
+  $('.submit-form-btn').on('click',function({
+
+  }));
+};
+
+$(".topic-btn").on('click', function({
+  event.preventDefault();
+
   $.ajax({
     url: queryURL,
     method: "GET"
@@ -25,3 +60,5 @@ $("#button").on('click', function({
     }
   })
 }));
+//Main Process
+//==============================================================================
