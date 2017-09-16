@@ -8,16 +8,12 @@ var topicArray = ["Carl Weathers", "Chow Yun-fat", "Chuck Norris", "Jean-Claude 
 ,"Mel Gibson","Harrison Ford","Jackie Chan", "Sylvester Stallone", "Arnold Schwarzenegger",
 "Bruce Willis", "Kurt Russel"];
 
-var topic = $(this).attr(".topic-btn",".submit-form-btn");
-
-var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-  topic + "&api_key=dc6zaTOxFJmzC&limit=10";
-
 //Functions
 //==============================================================================
 
 $('.topics-list').empty();
 
+//a function to render all the buttons in the topicArray
 function renderButtons(){
   for (var i = 0; i < topicArray.length; i++){
     var topicButton = $("<button>");
@@ -28,10 +24,12 @@ function renderButtons(){
   }
 }
 
-
+//turns the users input into a variable
+//then adds the topic to the topicArray
 function submitForm(){
   $('.submit-form-btn').on('click',function({
-
+    var topic = $(".topic-input").val().trim();
+    topicArray.push(topic);
   }));
 };
 
@@ -52,6 +50,11 @@ $(".gif").on("click", function() {
 
 $(".topic-btn").on('click', function({
   event.preventDefault();
+
+  var topic = $(this).attr(".topic-btn");//variable to use when making the queryURL
+
+  var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+    topic + "&api_key=dc6zaTOxFJmzC&limit=10";
 
   $.ajax({
     url: queryURL,
