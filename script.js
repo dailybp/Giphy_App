@@ -1,5 +1,8 @@
 //Psuedocode
-
+// create an array of topics
+// create a function to turn those topics in the array into buttons
+// create an funciton that take user input and adds the input to the array of topics
+// make an ajax call to Giphy to make gifs of the topics in our array
 //==============================================================================
 
 //Global Variables
@@ -11,7 +14,7 @@ var topicArray = ["Carl Weathers", "Chow Yun-fat", "Chuck Norris", "Jean-Claude 
 //Functions
 //==============================================================================
 
-$('.topics-list').empty();
+$('#topics-list').empty();
 
 //a function to render all the buttons in the topicArray
 function renderButtons(){
@@ -20,18 +23,16 @@ function renderButtons(){
     topicButton.addClass("topic-btn");
     topicButton.attr("data-name", topicArray[i]);
     topicButton.text(topicArray[i]);
-    $('.topics-list').append(topicButton);
+    $('#topics-list').append(topicButton);
   }
-}
+};
 
 //turns the users input into a variable
 //then adds the topic to the topicArray
-function submitForm(){
-  $('.submit-form-btn').on('click',function({
-    var topic = $(".topic-input").val().trim();
+$('#submit-form-btn').on('click',function(){
+    var topic = $("#topic-input").val().trim();
     topicArray.push(topic);
-  }));
-};
+  });
 
 $(".gif").on("click", function() {
   // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
@@ -48,19 +49,18 @@ $(".gif").on("click", function() {
   }
 });
 
-$(".topic-btn").on('click', function({
+$(".topic-btn").on('click', function(){
   event.preventDefault();
 
-  var topic = $(this).attr(".topic-btn");//variable to use when making the queryURL
+  var topic = $(this).attr("topic-btn");//variable to use when making the queryURL
 
-  var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-    topic + "&api_key=dc6zaTOxFJmzC&limit=10";
+  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+    topic + "&api_key=mFZAbwYtmyKGOidBCdB0q4Z8Ngdrqt3g";
 
   $.ajax({
     url: queryURL,
     method: "GET"
   })
-
   .done(function(response){
     console.log(response);
     var data = response.data;
@@ -78,8 +78,10 @@ $(".topic-btn").on('click', function({
       gifDiv.prepend(topicGif);
     }
   })
-}));
-
+});
 
 //Main Process
 //==============================================================================
+$(document).ready(function(){
+  renderButtons();
+});
